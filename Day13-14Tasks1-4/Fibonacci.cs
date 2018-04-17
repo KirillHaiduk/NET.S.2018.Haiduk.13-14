@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Day13_14Tasks1_4
 {
@@ -9,32 +10,28 @@ namespace Day13_14Tasks1_4
     public static class Fibonacci
     {
         /// <summary>
-        /// Method for generating list of Fibonacci numbers
+        /// Method for generating sequence of Fibonacci numbers
         /// </summary>
-        /// <param name="limit">Maximum value of Fibonacci number</param>
-        /// <returns>List of Fibonacci numbers</returns>
-        public static List<long> FibonacciGenerator(long limit)
+        /// <param name="amount">Maximum amount of elements of Fibonacci sequence</param>
+        /// <returns>Sequence of Fibonacci numbers</returns>
+        public static IEnumerable<BigInteger> FibonacciGenerator(int amount)
         {
-            if (limit <= 0)
+            if (amount <= 0)
             {
-                throw new ArgumentException(nameof(limit));
+                throw new ArgumentException(nameof(amount));
             }
 
-            List<long> fibonacci = new List<long>();
             long first = 0;
             long next = 1;
-            fibonacci.Add(first);
-            fibonacci.Add(next);
-            while (next <= limit)
+            yield return first;
+            yield return next;
+            for (int i = 2; i < amount; i++)
             {
                 long temp = next;
                 next += first;
                 first = temp;
-                fibonacci.Add(next);
+                yield return next;
             }
-
-            fibonacci.RemoveAt(fibonacci.Count - 1);
-            return fibonacci;
         }
     }
 }
