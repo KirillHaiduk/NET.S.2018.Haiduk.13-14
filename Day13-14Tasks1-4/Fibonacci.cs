@@ -21,13 +21,16 @@ namespace Day13_14Tasks1_4
                 throw new ArgumentException(nameof(amount));
             }
 
-            long first = 0;
-            long next = 1;
-            yield return first;
-            yield return next;
-            for (int i = 2; i < amount; i++)
+            return FibonacciHelper(amount);
+        }
+
+        private static IEnumerable<BigInteger> FibonacciHelper(int amount)
+        {
+            BigInteger first = -1;
+            BigInteger next = 1;            
+            for (int i = 0; i < amount; i++)
             {
-                long temp = next;
+                BigInteger temp = next;
                 next += first;
                 first = temp;
                 yield return next;
