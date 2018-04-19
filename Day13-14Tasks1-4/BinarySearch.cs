@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Day13_14Tasks1_4
 {
@@ -17,7 +18,7 @@ namespace Day13_14Tasks1_4
         /// <param name="key">Item to search</param>
         /// <param name="comparer">Instance of IComparer interface type</param>
         /// <returns>Number of position of wanted element in given array</returns>        
-        public static int BinarySearchGeneric<T>(this T[] array, T key, IComparer<T> comparer)
+        public static int BinarySearchGeneric<T>(this T[] array, T key, ICustomComparer<T> comparer)
         {
             InputValidation(array, key, comparer.Compare);
 
@@ -25,9 +26,7 @@ namespace Day13_14Tasks1_4
             {
                 if (key is IComparable && array[0] is IComparable)
                 {
-                    var t = key as IComparable;
-                    var a = array as IComparable[];
-                    return BinarySearchWithIComparable(a, t);
+                    comparer = (ICustomComparer<T>)Comparer<T>.Default;
                 }
                 else
                 {
@@ -96,32 +95,6 @@ namespace Day13_14Tasks1_4
             }
         }
 
-        private static int BinarySearchWithIComparable<T>(T[] array, T key) where T : IComparable
-        {
-            int first = 0;
-            int last = array.Length;
-            while (first < last)
-            {
-                int middle = first + ((last - first) / 2);
-                if (key.CompareTo(array[middle]) <= 0)
-                {
-                    last = middle;
-                }
-                else
-                {
-                    first = middle + 1;
-                }
-            }
-
-            if (array[last].CompareTo(key) == 0)
-            {
-                return last;
-            }
-            else
-            {
-                return -1;
-            }
-        }
         #endregion
     }
 }
