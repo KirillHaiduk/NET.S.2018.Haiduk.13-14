@@ -26,7 +26,7 @@ namespace Day13_14Tasks1_4
             {
                 if (key is IComparable && array[0] is IComparable)
                 {
-                    comparer = (ICustomComparer<T>)Comparer<T>.Default;
+                    return BinarySearchGeneric(array, key, Comparer<T>.Default.Compare);
                 }
                 else
                 {
